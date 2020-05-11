@@ -4,20 +4,21 @@
 
 #pragma once
 
-//
-// Created by Vasiliy Evdokimov on 21.04.2020.
-//
+#include <stdexcept>
+#include <string>
 
-//template<typename T>
-//using DynamicArrayT = DynamicArray<T>;
+size_t const DEFAULT_CAPACITY = 300;
+std::string const INDEX_OUT_OF_RANGE = "ERROR: Index out of range \n";
+std::string const NEGATIVE_SIZE = "ERROR : Size can't be negative \n";
 
-size_t const DEFAULT_CAPACITY = 100;
 
-// *** Constructors ***
+// **** Constructors ****
 
 template<typename T>
 DynamicArray<T>::DynamicArray(size_t size)
-        : size_(size), capacity_(std::max(size_, DEFAULT_CAPACITY)), data_(new T[capacity_]) {}
+    : size_(size), capacity_(std::max(size_ + DEFAULT_CAPACITY, size_ * 2)), data_(new T[capacity_]) {
+        IsErrorLength(size_);
+    }
 
 // ** Copy Constructor **
 
@@ -25,10 +26,11 @@ template<typename T>
 DynamicArray<T>::DynamicArray(DynamicArray const &rDarr)
     : size_(rDarr.size_), capacity_(rDarr.capacity_), data_(new T[rDarr.size_])
     {
-        for (size_t i = 0; i != size_; ++i) data_[i] = rDarr.data_[i];
+        IsErrorLength(size_);
+        for (size_t i = 0; i != size_; ++i) GetData()[i] = rDarr[i];
     }
 
-// *** Operators ***
+// **** Operators ****
 
 // ** Assignment Operator **
 
@@ -38,22 +40,37 @@ DynamicArray<T> & DynamicArray<T>::operator=(DynamicArray const &rDarr){
     return *this;
 }
 
-template<typename T>
-T DynamicArray<T>::operator[](size_t i) const { return data_[i]; }
+// ** [] Operator const and non-const version **
 
 template<typename T>
-T & DynamicArray<T>::operator[](size_t i) { return data_[i]; }
+T DynamicArray<T>::operator[](size_t i) const {
+    IsErrorOutOfRange(i);
+    return data_[i];
+}
+
+template<typename T>
+T & DynamicArray<T>::operator[](size_t i) {
+    IsErrorOutOfRange(i);
+    return data_[i];
+}
 
 
-// *** Destructor ***
+// **** Destructor ****
 
 template<typename T>
 DynamicArray<T>::~DynamicArray(){
     delete [] data_;
 }
 
+template<typename T>
+void DynamicArray<T>::FreeData(){
+    if (GetData()) {
+        delete [] GetData();
+        data_ = nullptr;
+    }
+}
 
-// *** Getters ***
+// **** Getters ****
 
 template<typename T>
 size_t DynamicArray<T>::GetSize() const { return size_; }
@@ -64,19 +81,57 @@ size_t DynamicArray<T>::GetCapacity() const { return capacity_; }
 template<typename T>
 T* DynamicArray<T>::GetData() const { return data_; }
 
-
-// *** Setters ***
+template<typename T>
+T DynamicArray<T>::GetElem(size_t i) const {
+    IsErrorOutOfRange(i);
+    return data_[i];
+}
 
 template<typename T>
-void DynamicArray<T>::Resize(size_t newSize){
-    DynamicArray<T> darr(newSize);
-    size_t n = newSize > darr.GetSize() ? darr.GetSize() : newSize;
-    for (size_t i = 0; i != n; ++i) darr[i] = data_[i];
-    SwapAttributes(darr);
+T & DynamicArray<T>::GetElem(size_t i) {
+    IsErrorOutOfRange(i);
+    return data_[i];
 }
 
 
-// *** Utils ***
+// **** Setters ****
+
+template<typename T>
+void DynamicArray<T>::Resize(size_t const newSize){
+    IsErrorLength(newSize);
+    DynamicArray<T> darr(newSize);
+    size_t n = newSize > darr.GetSize() ? darr.GetSize() : newSize;
+    for (size_t i = 0; i != n; ++i) darr[i] = GetData()[i];
+    SwapAttributes(darr);
+}
+
+template<typename T>
+void DynamicArray<T>::SetSize(size_t const newSize) { size_ = newSize; }
+
+template<typename T>
+void DynamicArray<T>::SetCapacity(size_t const newCapacity) { capacity_ = newCapacity; }
+
+template<typename T>
+void DynamicArray<T>::SetData(T* newData) {
+    FreeData();
+    data_ = newData;
+}
+
+template<typename T>
+void DynamicArray<T>::SetElement(size_t i, T value) { GetElem(i) = value; }
+
+
+// **** Utils ****
+
+template<typename T>
+void DynamicArray<T>::PushBack(T newElem){
+    if (GetCapacity() <= GetSize() + 1) ExpandCapacity();
+
+    SetSize(GetSize() + 1);
+    SetData(new T[GetCapacity()]);
+}
+
+// **** Private Methods ****
 
 template<typename T>
 void DynamicArray<T>::SwapAttributes(DynamicArray &rDarr){
@@ -85,3 +140,25 @@ void DynamicArray<T>::SwapAttributes(DynamicArray &rDarr){
     std::swap(data_, rDarr.data_);
 }
 
+template<typename T>
+void DynamicArray<T>::ExpandCapacity(){
+    SetCapacity(GetCapacity() * 2);
+    T* new_data = new T[GetCapacity()];
+    for (size_t iElem = 0; iElem != GetSize(); ++iElem)
+        new_data[iElem] = GetElem(iElem);
+
+    SetData(new_data);
+}
+
+
+// **** Error Handling ****
+
+template<typename T>
+void DynamicArray<T>::IsErrorOutOfRange(size_t i) const {
+    if (i < 0 || i >= GetSize()) throw std::out_of_range(INDEX_OUT_OF_RANGE);
+}
+
+template<typename T>
+void DynamicArray<T>::IsErrorLength(size_t size) const {
+    if (size < 0) throw std::length_error(NEGATIVE_SIZE);
+}

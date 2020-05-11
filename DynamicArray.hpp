@@ -10,55 +10,78 @@ template<typename T>
 class DynamicArray {
 public:
 
-    // *** Constructors ***
+    // **** Constructors ****
 
-    DynamicArray(size_t);
+    explicit DynamicArray(size_t);
 
     // ** Copy Constructor **
 
     DynamicArray(DynamicArray const &);
 
 
-    // *** Operators ***
+    // **** Operators ****
 
     DynamicArray & operator=(DynamicArray const &);
     T operator[](size_t) const;
     T & operator[](size_t);
 
-    // *** Destructor ***
+
+    // **** Destructor ****
 
     ~DynamicArray();
+    void FreeData();
 
 
-    // *** Getters ***
+    // **** Getters ****
 
     size_t GetSize () const;
     size_t GetCapacity() const;
     T* GetData() const;
+    T GetElem(size_t) const;
+    T & GetElem(size_t);
 
 
-    // *** Setters ***
+    // **** Setters ****
 
-    void Resize(size_t);
+    void Resize(size_t const);
+    void SetSize(size_t const);
+    void SetCapacity(size_t const);
+    void SetData(T*);
+    void SetElement(size_t, T);
 
 
-    // *** Utils ***
+    // **** Utils ****
 
-    //
+    void PushBack(T);
+    //void CopyDataValues(T*);
 
 private:
 
-    // *** Private Methods ***
+    // ****** Private Methods ******
+
+    // Needed to make it easier to implement public interface \
+       but they are dangerous to make public cause user \
+       can by mistake change invariants
+
+    // **** Private Utils ****
 
     void SwapAttributes(DynamicArray &);
     void ChangeCapacity();
+    void ExpandCapacity();
 
 
-    // *** Member Variables ***
+    // **** Error Handling ****
+
+    void IsErrorOutOfRange(size_t) const;
+    void IsErrorLength(size_t) const;
+
+
+
+    // **** Member Variables ****
 
     size_t size_;
     size_t capacity_;
     T* data_;
 };
 
-#include "DynamicArrayImplementation.h"
+#include "DynamicArrayImplementation.hpp"
