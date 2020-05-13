@@ -1,6 +1,6 @@
 #include <iostream>
 #include "DynamicArray.hpp"
-#include "LinkedList.hpp"
+#include "List.hpp"
 
 
 #define info(msg) std::cout << (#msg) << " = " << (msg) <<  std::endl;
