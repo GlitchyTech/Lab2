@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+
 template<typename T>
 class DynamicArray {
 public:
@@ -13,10 +14,11 @@ public:
     // **** Constructors ****
 
     explicit DynamicArray(size_t);
+    DynamicArray(T *, size_t);
 
     // ** Copy Constructor **
 
-    DynamicArray(DynamicArray const &);
+    DynamicArray(DynamicArray<T> const &);
 
 
     // **** Operators ****
@@ -36,7 +38,7 @@ public:
 
     size_t GetSize () const;
     size_t GetCapacity() const;
-    T* GetData() const;
+    T * GetData() const;
     T GetElem(size_t) const;
     T & GetElem(size_t);
 
@@ -46,14 +48,14 @@ public:
     void Resize(size_t const);
     void SetSize(size_t const);
     void SetCapacity(size_t const);
-    void SetData(T*);
+    void SetData(T *);
     void SetElement(size_t, T);
 
 
     // **** Utils ****
 
     void PushBack(T);
-    //void CopyDataValues(T*);
+    //void CopyDataValues(T *);
 
 private:
 
@@ -70,18 +72,11 @@ private:
     void ExpandCapacity();
 
 
-    // **** Error Handling ****
-
-    void IsErrorOutOfRange(size_t) const;
-    void IsErrorLength(size_t) const;
-
-
-
     // **** Member Variables ****
 
     size_t size_;
     size_t capacity_;
-    T* data_;
+    T *data_;
 };
 
 #include "DynamicArrayImplementation.hpp"

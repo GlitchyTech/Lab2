@@ -6,10 +6,10 @@
 
 #include <stdexcept>
 #include <string>
+#include "Utils.hpp"
+
 
 size_t const DEFAULT_CAPACITY = 300;
-std::string const INDEX_OUT_OF_RANGE = "ERROR: Index out of range \n";
-std::string const NEGATIVE_SIZE = "ERROR : Size can't be negative \n";
 
 
 // **** Constructors ****
@@ -20,15 +20,23 @@ DynamicArray<T>::DynamicArray(size_t size)
         IsErrorLength(size_);
     }
 
+template<typename T>
+DynamicArray<T>::DynamicArray(T* data, size_t numOfElements)
+    : size_(numOfElements), capacity_(std::max(size_ + DEFAULT_CAPACITY, size_ * 2)), data_(data) {
+        IsErrorLength(size_);
+    }
+
+
 // ** Copy Constructor **
 
 template<typename T>
-DynamicArray<T>::DynamicArray(DynamicArray const &rDarr)
+DynamicArray<T>::DynamicArray(DynamicArray<T> const &rDarr)
     : size_(rDarr.size_), capacity_(rDarr.capacity_), data_(new T[rDarr.size_])
     {
         IsErrorLength(size_);
         for (size_t i = 0; i != size_; ++i) GetData()[i] = rDarr[i];
     }
+
 
 // **** Operators ****
 
@@ -44,13 +52,13 @@ DynamicArray<T> & DynamicArray<T>::operator=(DynamicArray const &rDarr){
 
 template<typename T>
 T DynamicArray<T>::operator[](size_t i) const {
-    IsErrorOutOfRange(i);
+    IsErrorOutOfRange(i, GetSize());
     return data_[i];
 }
 
 template<typename T>
 T & DynamicArray<T>::operator[](size_t i) {
-    IsErrorOutOfRange(i);
+    IsErrorOutOfRange(i, GetSize());
     return data_[i];
 }
 
@@ -70,6 +78,7 @@ void DynamicArray<T>::FreeData(){
     }
 }
 
+
 // **** Getters ****
 
 template<typename T>
@@ -83,13 +92,13 @@ T* DynamicArray<T>::GetData() const { return data_; }
 
 template<typename T>
 T DynamicArray<T>::GetElem(size_t i) const {
-    IsErrorOutOfRange(i);
+    IsErrorOutOfRange(i, GetSize());
     return data_[i];
 }
 
 template<typename T>
 T & DynamicArray<T>::GetElem(size_t i) {
-    IsErrorOutOfRange(i);
+    IsErrorOutOfRange(i, GetSize());
     return data_[i];
 }
 
@@ -128,8 +137,9 @@ void DynamicArray<T>::PushBack(T newElem){
     if (GetCapacity() <= GetSize() + 1) ExpandCapacity();
 
     SetSize(GetSize() + 1);
-    SetData(new T[GetCapacity()]);
+    SetElement(GetSize() - 1, newElem);
 }
+
 
 // **** Private Methods ****
 
@@ -148,17 +158,4 @@ void DynamicArray<T>::ExpandCapacity(){
         new_data[iElem] = GetElem(iElem);
 
     SetData(new_data);
-}
-
-
-// **** Error Handling ****
-
-template<typename T>
-void DynamicArray<T>::IsErrorOutOfRange(size_t i) const {
-    if (i < 0 || i >= GetSize()) throw std::out_of_range(INDEX_OUT_OF_RANGE);
-}
-
-template<typename T>
-void DynamicArray<T>::IsErrorLength(size_t size) const {
-    if (size < 0) throw std::length_error(NEGATIVE_SIZE);
 }
