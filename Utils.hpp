@@ -9,5 +9,6 @@
 
 // **** Error Handling ****
 
-void IsErrorOutOfRange(size_t, size_t);
-void IsErrorLength(size_t);
+void IsExceptionOutOfRange(size_t, size_t);
+void IsExceptionLength(size_t, size_t = 0);
+void IsEndBiggerStart(size_t, size_t);

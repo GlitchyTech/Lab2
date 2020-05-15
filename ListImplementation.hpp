@@ -68,18 +68,136 @@ List<T>::~List(){
 // **** Getters ****
 
 template<typename T>
-T List<T>::GetFirst() const {
+size_t List<T>::GetSize() const { return size_; }
 
+template<typename T>
+T List<T>::GetElementData(size_t i) const {
+    IsErrorOutOfRange(i, GetSize());
+
+    Node *pCur_node = GetHead();
+    for (size_t iElem = 0; iElem < i; ++iElem){
+        pCur_node = pCur_node->GetNext();
+    }
+
+    return pCur_node->GetData();
+}
+
+template<typename T>
+T & List<T>::GetElementData(size_t i) {
+    IsExceptionOutOfRange(i, GetSize());
+
+    Node *pCur_node = GetHead();
+    for (size_t iElem = 0; iElem < i; ++iElem){
+        pCur_node = pCur_node->GetNext();
+    }
+
+    return pCur_node->GetData();
+}
+
+template<typename T>
+T List<T>::GetFirst() const {
+    IsExceptionLength(GetSize(), 1);
+    return GetElementData(0);
+}
+
+template<typename T>
+T & List<T>::GetFirst() {
+    IsExceptionLength(GetSize(), 1);
+    return GetElementData(0);
+}
+
+template<typename T>
+T List<T>::GetLast() const {
+    IsExceptionLength(GetSize(), 1);
+    return GetElementData(GetSize() - 1);
+}
+
+template<typename T>
+T & List<T>::GetLast() {
+    IsExceptionLength(GetSize(), 1);
+    return GetElementData(GetSize() - 1);
 }
 
 
 // **** Setters ****
 
-//
+template<typename T>
+void List<T>::SetSize(size_t newSize) { size_ = newSize; }
 
 
 // **** Utils ****
 
+//template<typename T>
+//List<T> * List<T>::GetSubList(size_t start, size_t end) const {
+//    IsEndBiggerStart(start + 1, end);
+//    IsExceptionOutOfRange(start, GetSize());
+//    IsExceptionOutOfRange(end, GetSize());
 //
+//    List<T> *pNew_list;
+//    pNew_list->SetSize(end - start);
+//    Node *pCur_node = &GetNode(start);
+//    pNew_list->SetHead(pCur_node);
+//
+//    return pNew_list;
+//}
+
+template<typename T>
+void List<T>::InsertAt(size_t i, T data){
+    IsExceptionOutOfRange(i, GetSize() + 1);
+
+    if (i == 0){
+        Node *pNew_head = new Node(data, GetHead());
+        SetHead(pNew_head);
+    }
+    else {
+        Node *pCur_node = &GetNode(i - 1);
+        Node *pNext_node = pCur_node->GetNext();
+        pCur_node->next_ = new Node(data, pNext_node);
+    }
+
+    SetSize(GetSize() + 1);
+}
+
+template<typename T>
+void List<T>::Prepend(T data) { InsertAt(0, data); }
+
+template<typename T>
+void List<T>::Append(T data) { InsertAt(GetSize(), data); }
+
+// ****** Private Methods ******
 
 
+// **** Getters ****
+
+template<typename T>
+typename List<T>::Node * List<T>::GetHead() const { return head_; }
+
+template<typename T>
+typename List<T>::Node & List<T>::GetNode(size_t i){
+    IsExceptionOutOfRange(i, GetSize());
+
+    Node *pCur_node = GetHead();
+    for (size_t iElem = 0; iElem < i; ++iElem){
+        pCur_node = pCur_node->GetNext();
+    }
+
+    return *pCur_node;
+}
+
+template<typename T>
+typename List<T>::Node List<T>::GetNode(size_t i) const {
+    IsExceptionOutOfRange(i, GetSize());
+
+    Node *pCur_node = GetHead();
+    for (size_t iElem = 0; iElem < i; ++iElem){
+        pCur_node = pCur_node->GetNext();
+    }
+
+    return *pCur_node;
+}
+
+
+// **** Setters ****
+
+template<typename T>
+void List<T>::SetHead(Node *pNewHead) { head_ = pNewHead; }

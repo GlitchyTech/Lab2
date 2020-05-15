@@ -17,13 +17,13 @@ size_t const DEFAULT_CAPACITY = 300;
 template<typename T>
 DynamicArray<T>::DynamicArray(size_t size)
     : size_(size), capacity_(std::max(size_ + DEFAULT_CAPACITY, size_ * 2)), data_(new T[capacity_]) {
-        IsErrorLength(size_);
+        IsExceptionLength(size_);
     }
 
 template<typename T>
 DynamicArray<T>::DynamicArray(T* data, size_t numOfElements)
     : size_(numOfElements), capacity_(std::max(size_ + DEFAULT_CAPACITY, size_ * 2)), data_(data) {
-        IsErrorLength(size_);
+        IsExceptionLength(size_);
     }
 
 
@@ -33,7 +33,7 @@ template<typename T>
 DynamicArray<T>::DynamicArray(DynamicArray<T> const &rDarr)
     : size_(rDarr.size_), capacity_(rDarr.capacity_), data_(new T[rDarr.size_])
     {
-        IsErrorLength(size_);
+        IsExceptionLength(size_);
         for (size_t i = 0; i != size_; ++i) GetData()[i] = rDarr[i];
     }
 
@@ -52,13 +52,13 @@ DynamicArray<T> & DynamicArray<T>::operator=(DynamicArray const &rDarr){
 
 template<typename T>
 T DynamicArray<T>::operator[](size_t i) const {
-    IsErrorOutOfRange(i, GetSize());
+    IsExceptionOutOfRange(i, GetSize());
     return data_[i];
 }
 
 template<typename T>
 T & DynamicArray<T>::operator[](size_t i) {
-    IsErrorOutOfRange(i, GetSize());
+    IsExceptionOutOfRange(i, GetSize());
     return data_[i];
 }
 
@@ -92,13 +92,13 @@ T* DynamicArray<T>::GetData() const { return data_; }
 
 template<typename T>
 T DynamicArray<T>::GetElem(size_t i) const {
-    IsErrorOutOfRange(i, GetSize());
+    IsExceptionOutOfRange(i, GetSize());
     return data_[i];
 }
 
 template<typename T>
 T & DynamicArray<T>::GetElem(size_t i) {
-    IsErrorOutOfRange(i, GetSize());
+    IsExceptionOutOfRange(i, GetSize());
     return data_[i];
 }
 
@@ -107,7 +107,7 @@ T & DynamicArray<T>::GetElem(size_t i) {
 
 template<typename T>
 void DynamicArray<T>::Resize(size_t const newSize){
-    IsErrorLength(newSize);
+    IsExceptionLength(newSize);
     DynamicArray<T> darr(newSize);
     size_t n = newSize > darr.GetSize() ? darr.GetSize() : newSize;
     for (size_t i = 0; i != n; ++i) darr[i] = GetData()[i];

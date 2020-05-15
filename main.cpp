@@ -4,6 +4,7 @@
 
 
 #define info(msg) std::cout << (#msg) << " = " << (msg) <<  std::endl;
+#define print(msg) std::cout << (#msg) << std::endl;
 
 
 int main() {
@@ -22,20 +23,34 @@ int main() {
     ptr[1] = 43;
     ptr[2] = 438;
     ptr[3] = 892;
-    List<int> list2(ptr, 4);
-    info(list2.head_->data_);
-    info(list2.head_->next_->data_);
+    print(first);
+    List<int> list1(ptr, 4);
+    print(second);
+    List<int> list2 = list1;
+    print(third);
+    info(list2.GetElementData(0));
+    info(list2.GetElementData(1));
+    info(list2.GetElementData(2));
+    info(list2.GetElementData(3));
 
-    info(list2.head_->next_->next_->data_);
-    info(list2.head_->next_->next_->next_->data_);
-    //info(list2.head_->next_->next_->next_->next_->data_);
+    print("*******");
+    list2.InsertAt(1, 348);
+    list2.Append(8920);
+    list2.Prepend(-2323);
 
-    List<int> list3 = list2;
-    info(list3.head_->data_);
-    info(list3.head_->next_->data_);
+    info(list2.GetElementData(0));
+    info(list2.GetElementData(1));
+    info(list2.GetElementData(2));
+    info(list2.GetElementData(3));
+    info(list2.GetElementData(4));
+    info(list2.GetElementData(5));
+    info(list2.GetElementData(6));
+    info(list2.GetSize());
+    //info(list2.GetElementData(7));
 
-    info(list3.head_->next_->next_->data_);
-    info(list3.head_->next_->next_->next_->data_);
-    //info(list3.head_->next_->next_->next_->next_->data_);
+//    List<int> *list3 = list2.GetSubList(2, 4);
+//    info(list3->GetElementData(0));
+//    info(list3->GetElementData(1));
+
     return 0;
 }
