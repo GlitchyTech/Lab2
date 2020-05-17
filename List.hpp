@@ -29,6 +29,9 @@ public:
     template<typename TT>
     friend std::ostream & operator<<(std::ostream &, List<TT>);
 
+    T operator[](size_t) const;
+    T & operator[](size_t);
+
 
     // **** Destructor ****
 
@@ -100,6 +103,12 @@ public:
 //        ~Node(){
 //            if (GetNext() != nullptr) delete next_;
 //        }
+
+
+        // **** Output ****
+
+//        template<typename TT>
+//        friend std::ostream & List<T>::operator<<(std::ostream &, List<TT>);
 
 
         // **** Getters ****

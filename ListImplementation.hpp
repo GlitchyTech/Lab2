@@ -59,8 +59,22 @@ List<T>::List(List<T> const &rList)
 //}
 
 template<typename T>
-std::ostream & operator<<(std::ostream & os, List<T> list) { return os << list.GetFirst(); }
+std::ostream & operator<<(std::ostream & os, List<T> list) {
+    os << "**** Your list **** \n\n";
+    typename List<T>::Node *pCur_node = list.GetHead();
+    for (size_t i = 0; i < list.GetSize(); ++i){
+        os << "Node " << i << " : " << pCur_node->GetData() << std::endl;
+        pCur_node = pCur_node->GetNext();
+    }
+    os << std::endl;
+    return os;
+}
 
+template<typename T>
+T List<T>::operator[](size_t i) const { return GetElementData(i); }
+
+template<typename T>
+T & List<T>::operator[](size_t i) { return GetElementData(i); }
 
 // **** Destructor ****
 
