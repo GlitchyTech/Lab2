@@ -29,6 +29,9 @@ public:
     template<typename TT>
     friend std::ostream & operator<<(std::ostream &, List<TT>);
 
+    template<typename TT>
+    friend std::istream & operator>>(std::istream &, List<TT> &);
+
     T operator[](size_t) const;
     T & operator[](size_t);
 
@@ -63,7 +66,7 @@ public:
     void InsertAt(size_t, T);
     void Append(T);
 
-public:
+private:
 
     struct Node;
 
@@ -116,6 +119,14 @@ public:
         T GetData() const { return data_; }
         T & GetData() { return data_; }
         Node * GetNext() { return next_; }
+
+
+        // **** Setters ****
+
+        void SetNext(Node *pNewNext) {
+            //if (next_ != nullptr) delete next_;
+            next_ = pNewNext;
+        }
 
 
         // **** Member Variables ****

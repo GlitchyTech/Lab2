@@ -45,21 +45,48 @@ List<T>::List(List<T> const &rList)
 
 // **** Operators ****
 
-//template<typename T>
-//List<T> * operator+(List<T> a, List<T> b){
-//    List<T> *pNew_list = ;
-//    size_t new_size = a.GetSize() + b.GetSize();
-//
-//    for (size_t i = 0; i < new_size; ++i){
-//        if (i == a.GetSize()){
-//
-//        }
-//        else
-//    }
-//}
+template<typename T>
+List<T> * operator+(List<T> a, List<T> b){
+    List<T> *pNew_list = a.GetSubList(0, a.GetSize());
+    typename List<T>::Node *pCur_node_a = &(pNew_list->GetNode(pNew_list->GetSize() - 1));
+    typename List<T>::Node *pCur_node_b = b.GetHead();
+
+    for (size_t i = 0; i < b.GetSize(); ++i){
+        typename List<T>::Node *pNew_next = new typename List<T>::Node(pCur_node_b->GetData());
+        pCur_node_a->SetNext(pNew_next);
+        pCur_node_a = pCur_node_a->GetNext();
+        pCur_node_b = pCur_node_b->GetNext();
+    }
+
+    pNew_list->SetSize(a.GetSize() + b.GetSize());
+
+    return pNew_list;
+}
 
 template<typename T>
-std::ostream & operator<<(std::ostream & os, List<T> list) {
+std::istream & operator>>(std::istream &is, List<T> &rList){
+    std::cout << "Enter number of elements in your list : ";
+    ll n = 0;
+    is >> n;
+    if (n < 0) throw std::length_error(NEGATIVE_SIZE);
+    std::cout << std::endl;
+
+    rList = List<T>();
+    std::cout << rList;
+    std::cout << "--- Now enter your elements one by one each"
+                 "on a separate line ---\n";
+    for (size_t i = 0; i < n; ++i){
+        T data = T(0);
+        std::cout << "Node " << i << " : ";
+        is >> data;
+        rList.Append(data);
+    }
+
+    return is;
+}
+
+template<typename T>
+std::ostream & operator<<(std::ostream &os, List<T> list) {
     os << "**** Your list **** \n\n";
     typename List<T>::Node *pCur_node = list.GetHead();
     for (size_t i = 0; i < list.GetSize(); ++i){
@@ -82,9 +109,11 @@ template<typename T>
 List<T>::~List(){
     if (head_ != nullptr) {
         Node *pCur_node = head_;
+        Node *pNext_node = nullptr;
         for (size_t i = 0; i != size_; ++i){
-            Node *pNext_node = pCur_node->next_;
+            pNext_node = pCur_node->GetNext();
             delete pCur_node;
+            //pCur_node = nullptr;
             pCur_node = pNext_node;
         }
 
@@ -154,7 +183,7 @@ template<typename T>
 List<T> * List<T>::GetSubList(size_t start, size_t end) {
     IsEndBiggerStart(start + 1, end);
     IsExceptionOutOfRange(start, GetSize());
-    IsExceptionOutOfRange(end, GetSize());
+    IsExceptionOutOfRange(end, GetSize() + 1);
 
     List<T> *pNew_list = new List;
     Node *pCur_node = &GetNode(start);
@@ -185,7 +214,8 @@ void List<T>::InsertAt(size_t i, T data){
     else {
         Node *pCur_node = &GetNode(i - 1);
         Node *pNext_node = pCur_node->GetNext();
-        pCur_node->next_ = new Node(data, pNext_node);
+        pCur_node->SetNext(new Node(data, pNext_node));
+        //pCur_node->next_ = new Node(data, pNext_node);
     }
 
     SetSize(GetSize() + 1);

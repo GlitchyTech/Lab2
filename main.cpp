@@ -8,6 +8,11 @@ int main() {
     DynamicArray<int> darr(size);
     DynamicArray<int> darr2 = darr;
     DynamicArray<int> darr3(20);
+    List<int> list0;
+    INFO(list0.GetSize());
+    std::cin >> list0;
+    INFO(list0.GetSize());
+    std::cout << list0;
 
     darr[0] = 184;
     darr[1] = 231;
@@ -41,8 +46,8 @@ int main() {
     std::cout << '\n';
     std::cout << list3;
     std::cout << "\n";
-    INFO(list3->head_->next_->next_ == nullptr);
-    INFO(list3->head_->next_->data_);
+    //INFO(list3->head_->next_->next_ == nullptr);
+    //INFO(list3->head_->next_->data_);
     //INFO(list3->GetElementData(2));
 
     list3->GetElementData(0) = 92482;
@@ -50,6 +55,8 @@ int main() {
 
     PRINT("\n\n testing output of list\n");
     std::cout << list1 << list2 << *list3;
+
+    std::cout << *(list1 + list2);
 
     return 0;
 }
