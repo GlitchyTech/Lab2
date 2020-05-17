@@ -45,7 +45,21 @@ List<T>::List(List<T> const &rList)
 
 // **** Operators ****
 
+//template<typename T>
+//List<T> * operator+(List<T> a, List<T> b){
+//    List<T> *pNew_list = ;
+//    size_t new_size = a.GetSize() + b.GetSize();
 //
+//    for (size_t i = 0; i < new_size; ++i){
+//        if (i == a.GetSize()){
+//
+//        }
+//        else
+//    }
+//}
+
+template<typename T>
+std::ostream & operator<<(std::ostream & os, List<T> list) { return os << list.GetFirst(); }
 
 
 // **** Destructor ****
@@ -119,27 +133,32 @@ T & List<T>::GetLast() {
 }
 
 
+// Creates unique list so that changing one of them \
+doesn't affect the other (I tested this)
+
+template<typename T>
+List<T> * List<T>::GetSubList(size_t start, size_t end) {
+    IsEndBiggerStart(start + 1, end);
+    IsExceptionOutOfRange(start, GetSize());
+    IsExceptionOutOfRange(end, GetSize());
+
+    List<T> *pNew_list = new List;
+    Node *pCur_node = &GetNode(start);
+    for (size_t i = 0; i < end - start; ++i){
+        pNew_list->Append(pCur_node->GetData());
+        pCur_node = pCur_node->GetNext();
+    }
+
+    return pNew_list;
+}
+
 // **** Setters ****
 
 template<typename T>
 void List<T>::SetSize(size_t newSize) { size_ = newSize; }
 
 
-// **** Utils ****
-
-//template<typename T>
-//List<T> * List<T>::GetSubList(size_t start, size_t end) const {
-//    IsEndBiggerStart(start + 1, end);
-//    IsExceptionOutOfRange(start, GetSize());
-//    IsExceptionOutOfRange(end, GetSize());
-//
-//    List<T> *pNew_list;
-//    pNew_list->SetSize(end - start);
-//    Node *pCur_node = &GetNode(start);
-//    pNew_list->SetHead(pCur_node);
-//
-//    return pNew_list;
-//}
+// **** Modifiers ****
 
 template<typename T>
 void List<T>::InsertAt(size_t i, T data){

@@ -23,7 +23,11 @@ public:
 
     // **** Operators ****
 
-    //
+    template<typename TT>
+    friend List<TT> * operator+(List<TT>, List<TT>);
+
+    template<typename TT>
+    friend std::ostream & operator<<(std::ostream &, List<TT>);
 
 
     // **** Destructor ****
@@ -42,6 +46,7 @@ public:
     T GetElementData(size_t) const;
     T & GetElementData(size_t);
 
+    List<T> * GetSubList(size_t, size_t);
 
 
     // **** Setters ****
@@ -49,9 +54,8 @@ public:
     void SetSize(size_t);
 
 
-    // **** Utils ****
+    // **** Modifiers ****
 
-    List<T> * GetSubList(size_t, size_t) const;
     void Prepend(T);
     void InsertAt(size_t, T);
     void Append(T);
@@ -111,7 +115,7 @@ public:
         Node *next_;
     };
 
-public:
+
     size_t size_;
     Node *head_;
 };

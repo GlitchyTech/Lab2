@@ -7,6 +7,24 @@
 #include <iostream>
 #include <stdexcept>
 
+
+// **** Macros ****
+
+// Helps me debug my code. Yeah I know... There is a debugger \
+but I don't know how to use him so this is much easier
+
+#define INFO(msg) std::cout << (#msg) << " = " << (msg) <<  std::endl;
+#define PRINT(msg) std::cout << (msg) << std::endl;
+
+
+// **** Constants ****
+
+extern std::string const INDEX_OUT_OF_RANGE;
+extern std::string const NEGATIVE_SIZE;
+extern std::string const EMPTY_CONTAINER;
+extern std::string const START_BIGGER_THAN_END;
+
+
 // **** Error Handling ****
 
 void IsExceptionOutOfRange(size_t, size_t);
