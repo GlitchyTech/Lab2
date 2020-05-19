@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+extern size_t const DEFAULT_CAPACITY;
 
 template<typename T>
 class DynamicArray {
@@ -13,6 +14,7 @@ public:
 
     // **** Constructors ****
 
+    DynamicArray();
     explicit DynamicArray(size_t);
     DynamicArray(T *, size_t);
 
@@ -36,6 +38,10 @@ public:
 
     // **** Getters ****
 
+    T GetFirst() const;
+    T & GetFirst();
+    T GetLast() const;
+    T & GetLast();
     size_t GetSize () const;
     size_t GetCapacity() const;
     T * GetData() const;
@@ -45,9 +51,9 @@ public:
 
     // **** Setters ****
 
-    void Resize(size_t const);
-    void SetSize(size_t const);
-    void SetCapacity(size_t const);
+    void Resize(size_t);
+    void SetSize(size_t);
+    void SetCapacity(size_t);
     void SetData(T *);
     void SetElement(size_t, T);
 

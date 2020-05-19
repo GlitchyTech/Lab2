@@ -15,6 +15,10 @@ size_t const DEFAULT_CAPACITY = 300;
 // **** Constructors ****
 
 template<typename T>
+DynamicArray<T>::DynamicArray()
+    : size_(0), capacity_(DEFAULT_CAPACITY), data_(nullptr) {}
+
+template<typename T>
 DynamicArray<T>::DynamicArray(size_t size)
     : size_(size), capacity_(std::max(size_ + DEFAULT_CAPACITY, size_ * 2)), data_(new T[capacity_]) {
         IsExceptionLength(size_);
@@ -80,6 +84,18 @@ void DynamicArray<T>::FreeData(){
 
 
 // **** Getters ****
+
+template<typename T>
+T DynamicArray<T>::GetFirst() const { return GetElem(0); }
+
+template<typename T>
+T & DynamicArray<T>::GetFirst() { return GetElem(0); }
+
+template<typename T>
+T DynamicArray<T>::GetLast() const { return GetElem(GetSize() - 1); }
+
+template<typename T>
+T & DynamicArray<T>::GetLast() { return GetElem(GetSize() - 1); }
 
 template<typename T>
 size_t DynamicArray<T>::GetSize() const { return size_; }
