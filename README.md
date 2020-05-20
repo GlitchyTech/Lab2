@@ -4,4 +4,4 @@ Implementing *String* class via *ArraySequence* and *ListSequence* which both us
 
 *Utils* is used for exception handling and some debug features.
 
-<class>Implementation.hpp is just file with definitions of <class>. I use it to separate declaration and definitions.
+#class_name#Implementation.hpp is just file with definitions of #class_name#. I use it to separate declaration and definitions.
