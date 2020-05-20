@@ -66,6 +66,35 @@ T & DynamicArray<T>::operator[](size_t i) {
     return data_[i];
 }
 
+template<typename T>
+std::istream & operator>>(std::istream &rIs, DynamicArray<T> &rArray){
+    ll size = 0;
+    std::cout << "Enter size of your array : ";
+    rIs >> size;
+    if (size < 0) throw std::length_error(NEGATIVE_SIZE);
+    std::cout << std::endl;
+
+    rArray = DynamicArray<T>(size);
+    std::cout << "--- Now enter your elements one by one each"
+                 "on a separate line ---\n";
+    for (size_t i = 0; i < size; ++i){
+        T data = T(0);
+        std::cout << "Element " << i << " : ";
+        rIs >> data;
+        rArray[i] = data;
+    }
+
+    return rIs;
+}
+
+template<typename T>
+std::ostream & operator<<(std::ostream &rOs, DynamicArray<T> const &rArray){
+    rOs << "**** Your array **** \n\n";
+    for (size_t i = 0; i < rArray.GetSize(); ++i) rOs << "[" << i << "] = " << rArray[i] << std::endl;
+    rOs << std::endl;
+    return rOs;
+}
+
 
 // **** Destructor ****
 
@@ -104,7 +133,7 @@ template<typename T>
 size_t DynamicArray<T>::GetCapacity() const { return capacity_; }
 
 template<typename T>
-T* DynamicArray<T>::GetData() const { return data_; }
+T* DynamicArray<T>::GetData() { return data_; }
 
 template<typename T>
 T DynamicArray<T>::GetElem(size_t i) const {
@@ -124,10 +153,8 @@ T & DynamicArray<T>::GetElem(size_t i) {
 template<typename T>
 void DynamicArray<T>::Resize(size_t const newSize){
     IsExceptionLength(newSize);
-    DynamicArray<T> darr(newSize);
-    size_t n = newSize > darr.GetSize() ? darr.GetSize() : newSize;
-    for (size_t i = 0; i != n; ++i) darr[i] = GetData()[i];
-    SwapAttributes(darr);
+    if (newSize > GetCapacity()) ExpandCapacity(newSize / GetCapacity() + 1);
+    else SetSize(newSize);
 }
 
 template<typename T>
@@ -146,15 +173,48 @@ template<typename T>
 void DynamicArray<T>::SetElement(size_t i, T value) { GetElem(i) = value; }
 
 
-// **** Utils ****
+// **** Modifiers ****
 
 template<typename T>
-void DynamicArray<T>::PushBack(T newElem){
-    if (GetCapacity() <= GetSize() + 1) ExpandCapacity();
+void DynamicArray<T>::InsertAt(size_t i, T data) {
+    IsExceptionOutOfRange(i, GetSize() + 1);
+
+    if (GetSize() + 1 > GetCapacity()) ExpandCapacity();
 
     SetSize(GetSize() + 1);
-    SetElement(GetSize() - 1, newElem);
+    T store = data;
+    for (size_t iElem = i; iElem < GetSize(); ++iElem){
+        T temp = GetElem(iElem);
+        GetElem(iElem) = store;
+        store = temp;
+    }
 }
+
+template<typename T>
+void DynamicArray<T>::Prepend(T data) { InsertAt(0, data); }
+
+template<typename T>
+void DynamicArray<T>::Append(T data) { InsertAt(GetSize(), data); }
+
+template<typename T>
+void DynamicArray<T>::EraseAt(size_t i) {
+    IsExceptionOutOfRange(i, GetSize());
+    INFO(i);
+
+    if (GetSize() == 0) return;
+
+    for (size_t iElem = i; iElem < GetSize() - 1; ++iElem){
+        T store = GetElem(iElem + 1);
+        GetElem(iElem) = store;
+    }
+    SetSize(GetSize() - 1);
+}
+
+template<typename T>
+void DynamicArray<T>::PopFirst() { EraseAt(0); }
+
+template<typename T>
+void DynamicArray<T>::PopBack() { EraseAt(GetSize() - 1); }
 
 
 // **** Private Methods ****
@@ -167,11 +227,11 @@ void DynamicArray<T>::SwapAttributes(DynamicArray &rDarr){
 }
 
 template<typename T>
-void DynamicArray<T>::ExpandCapacity(){
-    SetCapacity(GetCapacity() * 2);
-    T* new_data = new T[GetCapacity()];
+void DynamicArray<T>::ExpandCapacity(size_t koeff){
+    SetCapacity(GetCapacity() * std::max(koeff, 2UL));
+    T *pNew_data = new T[GetCapacity()];
     for (size_t iElem = 0; iElem != GetSize(); ++iElem)
-        new_data[iElem] = GetElem(iElem);
+        pNew_data[iElem] = GetElem(iElem);
 
-    SetData(new_data);
+    SetData(pNew_data);
 }

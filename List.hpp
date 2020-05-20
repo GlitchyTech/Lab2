@@ -14,7 +14,7 @@ public:
     // **** Constructors ****
 
     List();
-    List(T*, size_t);
+    List(T *, size_t);
 
     // ** Copy Constructor
 
@@ -27,10 +27,10 @@ public:
     friend List<TT> * operator+(List<TT>, List<TT>);
 
     template<typename TT>
-    friend std::ostream & operator<<(std::ostream &, List<TT>);
+    friend std::istream & operator>>(std::istream &, List<TT> &);
 
     template<typename TT>
-    friend std::istream & operator>>(std::istream &, List<TT> &);
+    friend std::ostream & operator<<(std::ostream &, List<TT> const &);
 
     T operator[](size_t) const;
     T & operator[](size_t);
@@ -65,6 +65,9 @@ public:
     void Prepend(T);
     void InsertAt(size_t, T);
     void Append(T);
+    void PopFirst();
+    void EraseAt(size_t);
+    void PopBack();
 
 private:
 
@@ -103,9 +106,10 @@ private:
         nodes twice. First in List destructor then \
         in Node destructor which will cause error
 
-//        ~Node(){
-//            if (GetNext() != nullptr) delete next_;
-//        }
+        ~Node(){
+            if (GetNext() != nullptr) delete next_;
+            next_ = nullptr;
+        }
 
 
         // **** Output ****

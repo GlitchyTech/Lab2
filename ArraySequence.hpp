@@ -25,7 +25,7 @@ public:
 
     // **** Destructor ****
 
-    ~ArraySequence();
+    ~ArraySequence() = default;
 
 
     // **** Operators ****
@@ -34,6 +34,12 @@ public:
     ArraySequence<T> & operator=(ArraySequence<T> const  &);
     T operator[](size_t) const;
     T & operator[](size_t);
+
+    template<typename TT>
+    friend std::istream & operator>>(std::istream &, ArraySequence<TT> &);
+
+    template<typename TT>
+    friend std::ostream & operator<<(std::ostream &, ArraySequence<TT> const &);
 
 
     // **** Getters ****
@@ -77,7 +83,9 @@ public:
 
 
 private:
-    DynamicArray<T> *array_;
+
+    DynamicArray<T> array_;
+
 };
 
 

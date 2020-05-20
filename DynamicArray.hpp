@@ -29,6 +29,12 @@ public:
     T operator[](size_t) const;
     T & operator[](size_t);
 
+    template<typename TT>
+    friend std::istream & operator>>(std::istream &, DynamicArray<TT> &);
+
+    template<typename TT>
+    friend std::ostream & operator<<(std::ostream &, DynamicArray<TT> const &);
+
 
     // **** Destructor ****
 
@@ -44,7 +50,7 @@ public:
     T & GetLast();
     size_t GetSize () const;
     size_t GetCapacity() const;
-    T * GetData() const;
+    T * GetData();
     T GetElem(size_t) const;
     T & GetElem(size_t);
 
@@ -58,10 +64,14 @@ public:
     void SetElement(size_t, T);
 
 
-    // **** Utils ****
+    // **** Modifiers ****
 
-    void PushBack(T);
-    //void CopyDataValues(T *);
+    void Prepend(T);
+    void InsertAt(size_t, T);
+    void Append(T);
+    void PopFirst();
+    void EraseAt(size_t);
+    void PopBack();
 
 private:
 
@@ -75,7 +85,7 @@ private:
 
     void SwapAttributes(DynamicArray &);
     void ChangeCapacity();
-    void ExpandCapacity();
+    void ExpandCapacity(size_t = 2);
 
 
     // **** Member Variables ****

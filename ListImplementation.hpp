@@ -64,37 +64,36 @@ List<T> * operator+(List<T> a, List<T> b){
 }
 
 template<typename T>
-std::istream & operator>>(std::istream &is, List<T> &rList){
+std::istream & operator>>(std::istream &rIs, List<T> &rList){
     std::cout << "Enter number of elements in your list : ";
     ll n = 0;
-    is >> n;
+    rIs >> n;
     if (n < 0) throw std::length_error(NEGATIVE_SIZE);
     std::cout << std::endl;
 
     rList = List<T>();
-    std::cout << rList;
     std::cout << "--- Now enter your elements one by one each"
                  "on a separate line ---\n";
     for (size_t i = 0; i < n; ++i){
         T data = T(0);
         std::cout << "Node " << i << " : ";
-        is >> data;
+        rIs >> data;
         rList.Append(data);
     }
 
-    return is;
+    return rIs;
 }
 
 template<typename T>
-std::ostream & operator<<(std::ostream &os, List<T> list) {
-    os << "**** Your list **** \n\n";
-    typename List<T>::Node *pCur_node = list.GetHead();
-    for (size_t i = 0; i < list.GetSize(); ++i){
-        os << "Node " << i << " : " << pCur_node->GetData() << std::endl;
+std::ostream & operator<<(std::ostream &rOs, List<T> const &rList) {
+    rOs << "**** Your list **** \n\n";
+    typename List<T>::Node *pCur_node = rList.GetHead();
+    for (size_t i = 0; i < rList.GetSize(); ++i){
+        rOs << "Node " << i << " : " << pCur_node->GetData() << std::endl;
         pCur_node = pCur_node->GetNext();
     }
-    os << std::endl;
-    return os;
+    rOs << std::endl;
+    return rOs;
 }
 
 template<typename T>
@@ -107,18 +106,8 @@ T & List<T>::operator[](size_t i) { return GetElementData(i); }
 
 template<typename T>
 List<T>::~List(){
-    if (head_ != nullptr) {
-        Node *pCur_node = head_;
-        Node *pNext_node = nullptr;
-        for (size_t i = 0; i != size_; ++i){
-            pNext_node = pCur_node->GetNext();
-            delete pCur_node;
-            //pCur_node = nullptr;
-            pCur_node = pNext_node;
-        }
-
-        head_ = nullptr;
-    }
+    delete head_;
+    head_ = nullptr;
 }
 
 
@@ -227,6 +216,28 @@ void List<T>::Prepend(T data) { InsertAt(0, data); }
 template<typename T>
 void List<T>::Append(T data) { InsertAt(GetSize(), data); }
 
+template<typename T>
+void List<T>::EraseAt(size_t i){
+    IsExceptionOutOfRange(i, GetSize());
+
+    if (i == 0 || GetSize() == 1) {
+        SetHead(GetHead()->GetNext());
+    }
+    else {
+        Node *pCur_node = &GetNode(i - 1);
+        pCur_node->SetNext(pCur_node->GetNext()->GetNext());
+        //pCur_node->GetNext()->~Node();
+    }
+
+    SetSize(GetSize() - 1);
+}
+
+template<typename T>
+void List<T>::PopFirst() { EraseAt(0); }
+
+template<typename T>
+void List<T>::PopBack() { EraseAt(GetSize() - 1); }
+
 // ****** Private Methods ******
 
 
@@ -263,4 +274,6 @@ typename List<T>::Node List<T>::GetNode(size_t i) const {
 // **** Setters ****
 
 template<typename T>
-void List<T>::SetHead(Node *pNewHead) { head_ = pNewHead; }
+void List<T>::SetHead(Node *pNewHead) {
+    head_ = pNewHead;
+}
