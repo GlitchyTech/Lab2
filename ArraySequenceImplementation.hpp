@@ -21,7 +21,9 @@ ArraySequence<T>::ArraySequence(T *pData, size_t size)
 
 // ** Copy Constructor **
 
-//
+template<typename T>
+ArraySequence<T>::ArraySequence(ArraySequence<T> const &rArray)
+    : array_(rArray.GetArray()) {}
 
 
 // **** Destructor ****
@@ -48,10 +50,11 @@ template<typename T>
 T & ArraySequence<T>::operator[](size_t i) { return GetArray()[i]; }
 
 template<typename T>
-std::istream & operator>>(std::istream &rIs, ArraySequence<T> &rArray) { return std::cin << rArray.GetArray(); }
+std::istream & operator>>(std::istream &rIs, ArraySequence<T> &rArray) { return std::cin >> rArray.GetArray(); }
 
 template<typename T>
 std::ostream & operator<<(std::ostream &rOs, ArraySequence<T> const &rArray) { return std::cout << rArray.GetArray(); }
+
 
 // **** Getters ****
 

@@ -11,7 +11,7 @@ class ISequence {
 public:
 
     ISequence() = default;
-    virtual ~ISequence() {}
+    virtual ~ISequence() = default;
 
 
     // **** Operators ****
@@ -30,7 +30,7 @@ public:
     virtual T GetElementData(size_t) const = 0;
     virtual T & GetElementData(size_t) = 0;
     virtual size_t GetSize() const = 0;
-    virtual ISequence<T> * GetSubSequence(size_t, size_t) const = 0;
+    //virtual ISequence<T> * GetSubSequence(size_t, size_t) const = 0;
 
 
     // **** Modifiers ****
