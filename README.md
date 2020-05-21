@@ -7,4 +7,5 @@ Implementing *String* class via *ArraySequence* and *ListSequence* which both us
 #class_name#Implementation.hpp is just file with definitions of #class_name#. I use it to separate declaration and definitions.
 
 *StringVector* is a C++ string implemented via ArraySequence
+
 *StringList* is a C++ string implemented via ListSequence
