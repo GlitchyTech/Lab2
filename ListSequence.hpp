@@ -15,9 +15,8 @@ public:
     // **** Constructors ****
 
     ListSequence();
-    ListSequence(List<T> const &);
     ListSequence(T *, size_t);
-    //ListSequence(List<T>);
+    ListSequence(List<T> const &);
 
 
     // ** Copy Constructor **
@@ -32,9 +31,11 @@ public:
 
     // **** Operators ****
 
-    ListSequence<T> * operator+(ISequence<T>);
+    template<typename TT>
+    friend ListSequence<TT> operator+(ListSequence<TT> const &, ListSequence<TT> const &);
     T operator[](size_t) const;
     T & operator[](size_t);
+    ListSequence<T> & operator=(ListSequence<T> const &);
 
     template<typename TT>
     friend std::istream & operator>>(std::istream &, ListSequence<TT> &);

@@ -44,6 +44,15 @@ DynamicArray<T>::DynamicArray(DynamicArray<T> const &rDarr)
 
 // **** Operators ****
 
+template<typename T>
+DynamicArray<T> operator+(DynamicArray<T> const &rDarrA, DynamicArray<T> const &rDarrB){
+    DynamicArray<T> Darr(rDarrA.GetSize() + rDarrB.GetSize());
+    for (size_t i = 0; i < rDarrA.GetSize(); ++i) Darr[i] = rDarrA[i];
+    for (size_t i = 0; i < rDarrB.GetSize(); ++i) Darr[i + rDarrA.GetSize()] = rDarrB[i];
+
+    return Darr;
+}
+
 // ** Assignment Operator **
 
 template<typename T>
@@ -101,6 +110,7 @@ std::ostream & operator<<(std::ostream &rOs, DynamicArray<T> const &rArray){
 template<typename T>
 DynamicArray<T>::~DynamicArray(){
     delete [] data_;
+    data_ = nullptr;
 }
 
 template<typename T>

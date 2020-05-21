@@ -18,6 +18,10 @@ template<typename T>
 ArraySequence<T>::ArraySequence(T *pData, size_t size)
     : array_(pData, size) {}
 
+template<typename T>
+ArraySequence<T>::ArraySequence(DynamicArray<T> const &rDArray)
+    : array_(rDArray) {}
+
 
 // ** Copy Constructor **
 
@@ -34,12 +38,13 @@ ArraySequence<T>::ArraySequence(ArraySequence<T> const &rArray)
 // **** Operators ****
 
 template<typename T>
-ArraySequence<T> * ArraySequence<T>::operator+(ISequence<T> array){
-    return new ArraySequence<T>;
+ArraySequence<T> operator+(ArraySequence<T> const &rArrayA, ArraySequence<T> const &rArrayB) {
+    return rArrayA.GetArray() + rArrayB.GetArray();
 }
 
 template<typename T>
 ArraySequence<T> & ArraySequence<T>::operator=(ArraySequence<T> const &rArray){
+    GetArray() = rArray.GetArray();
     return *this;
 }
 
@@ -84,6 +89,9 @@ T & ArraySequence<T>::GetElementData(size_t i) { return GetArray().GetElem(i); }
 
 template<typename T>
 size_t ArraySequence<T>::GetSize() const { return GetArray().GetSize(); }
+
+template<typename T>
+size_t ArraySequence<T>::GetCapacity() const { return GetArray().GetCapacity(); }
 
 template<typename T>
 ArraySequence<T> * ArraySequence<T>::GetSubSequence(size_t start, size_t end) const {

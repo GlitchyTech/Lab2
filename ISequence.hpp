@@ -16,7 +16,7 @@ public:
 
     // **** Operators ****
 
-    virtual ISequence<T> * operator+(ISequence<T>) = 0;
+    //virtual ISequence<T> * operator+(ISequence<T>) = 0;
     virtual T operator[](size_t) const =  0;
     virtual T & operator[](size_t) = 0;
 

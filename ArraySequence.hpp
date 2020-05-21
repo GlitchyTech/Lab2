@@ -17,6 +17,7 @@ public:
     ArraySequence();
     explicit ArraySequence(size_t);
     ArraySequence(T *, size_t);
+    ArraySequence(DynamicArray<T> const &);
 
     // ** Copy Constructor **
 
@@ -30,7 +31,8 @@ public:
 
     // **** Operators ****
 
-    ArraySequence<T> * operator+(ISequence<T>);
+    template<typename TT>
+    friend ArraySequence<TT> operator+(ArraySequence<TT> const &, ArraySequence<TT> const &);
     ArraySequence<T> & operator=(ArraySequence<T> const  &);
     T operator[](size_t) const;
     T & operator[](size_t);

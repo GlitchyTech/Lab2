@@ -24,7 +24,9 @@ public:
     // **** Operators ****
 
     template<typename TT>
-    friend List<TT> * operator+(List<TT>, List<TT>);
+    friend List<TT> operator+(List<TT>, List<TT>);
+
+    List<T> & operator=(List<T> const &);
 
     template<typename TT>
     friend std::istream & operator>>(std::istream &, List<TT> &);
@@ -86,6 +88,11 @@ private:
     // **** Setters ****
 
     void SetHead(Node *);
+
+
+    // **** Utils ****
+
+    void SwapAttributes(List<T> &);
 
 
     // **** Member Variables ****

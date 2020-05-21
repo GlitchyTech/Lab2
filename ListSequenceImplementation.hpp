@@ -15,6 +15,10 @@ template<typename T>
 ListSequence<T>::ListSequence(T *pData, size_t size)
     : list_(pData, size) {}
 
+template<typename T>
+ListSequence<T>::ListSequence(List<T> const &rList)
+    : list_(rList) {}
+
 
 // ** Copy Constructor **
 
@@ -26,7 +30,8 @@ ListSequence<T>::ListSequence(ListSequence<T> const &rList)
 // **** Operators ****
 
 template<typename T>
-ListSequence<T> * ListSequence<T>::operator+(ISequence<T> seq) { return new ListSequence<T>; }
+ListSequence<T> operator+(ListSequence<T> const &rListA, ListSequence<T> const &rListB){ return rListA.GetList() + rListB; }
+
 
 // ** Operator[] **
 
@@ -36,6 +41,11 @@ T ListSequence<T>::operator[](size_t i) const { return GetList()[i]; }
 template<typename T>
 T & ListSequence<T>::operator[](size_t i) { return GetList()[i]; }
 
+template<typename T>
+ListSequence<T> & ListSequence<T>::operator=(ListSequence<T> const &rList){
+    GetList() = rList.GetList();
+    return *this;
+}
 
 // ** Input and Output
 

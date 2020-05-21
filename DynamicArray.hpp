@@ -25,7 +25,9 @@ public:
 
     // **** Operators ****
 
-    DynamicArray & operator=(DynamicArray const &);
+    template<typename TT>
+    friend DynamicArray<TT> operator+(DynamicArray<TT> const &, DynamicArray<TT> const &);
+    DynamicArray<T> & operator=(DynamicArray<T> const &);
     T operator[](size_t) const;
     T & operator[](size_t);
 

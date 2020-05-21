@@ -10,6 +10,8 @@
 class StringL {
 public:
 
+
+
 private:
 
     ListSequence<char> string_;

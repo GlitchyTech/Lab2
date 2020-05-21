@@ -3,20 +3,15 @@
 #include "ArraySequence.hpp"
 #include "List.hpp"
 #include "ListSequence.hpp"
+#include "StringVector.hpp"
+#include "StringList.hpp"
+#include "Interface.hpp"
 
 
 int main() {
-    ArraySequence<int> array(3);
-    array[0] = 0;
-    array[1] = 1;
-    array[2] = 2;
-    ArraySequence<int> array2 = array;
-    std::cout << array2;
-
-    ListSequence<int> list;
-    list.Append(1);
-    list.Append(2);
-    list.Append(-3);
-    std::cout << list;
+    StringV str = "abcdef", str2;
+    std::cin >> str >> str2;
+    str2 = str;
+    std::cout << str << str2 << str + str2;
     return 0;
 }

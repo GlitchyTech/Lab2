@@ -46,7 +46,7 @@ List<T>::List(List<T> const &rList)
 // **** Operators ****
 
 template<typename T>
-List<T> * operator+(List<T> a, List<T> b){
+List<T> operator+(List<T> a, List<T> b){
     List<T> *pNew_list = a.GetSubList(0, a.GetSize());
     typename List<T>::Node *pCur_node_a = &(pNew_list->GetNode(pNew_list->GetSize() - 1));
     typename List<T>::Node *pCur_node_b = b.GetHead();
@@ -60,7 +60,13 @@ List<T> * operator+(List<T> a, List<T> b){
 
     pNew_list->SetSize(a.GetSize() + b.GetSize());
 
-    return pNew_list;
+    return *pNew_list;
+}
+
+template<typename T>
+List<T> & List<T>::operator=(List<T> const &rList){
+    if (this != &rList) List<T>(rList).SwapAttributes(*this);
+    return *this;
 }
 
 template<typename T>
@@ -276,4 +282,13 @@ typename List<T>::Node List<T>::GetNode(size_t i) const {
 template<typename T>
 void List<T>::SetHead(Node *pNewHead) {
     head_ = pNewHead;
+}
+
+
+// **** Utils ****
+
+template<typename T>
+void List<T>::SwapAttributes(List<T> &rList) {
+    std::swap(head_, rList.head_);
+    std::swap(size_, rList.size_);
 }
