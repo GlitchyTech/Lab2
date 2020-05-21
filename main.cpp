@@ -9,7 +9,7 @@
 
 
 int main() {
-    StringV str = "abcdef", str2;
+    StringL str = "abcdef", str2;
     std::cin >> str >> str2;
     str2 = str;
     std::cout << str << str2 << str + str2;

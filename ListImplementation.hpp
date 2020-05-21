@@ -16,7 +16,7 @@ List<T>::List()
     : size_(0), head_(nullptr) {}
 
 template<typename T>
-List<T>::List(T *pData, size_t size)
+List<T>::List(T const *pData, size_t size)
     : size_(size)
     {
         Node **ppCur_node = &head_;

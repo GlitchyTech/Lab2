@@ -14,7 +14,7 @@ public:
     // **** Constructors ****
 
     List();
-    List(T *, size_t);
+    List(T const *, size_t);
 
     // ** Copy Constructor
 

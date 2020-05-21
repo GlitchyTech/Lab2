@@ -12,7 +12,7 @@ ListSequence<T>::ListSequence()
     : list_() {}
 
 template<typename T>
-ListSequence<T>::ListSequence(T *pData, size_t size)
+ListSequence<T>::ListSequence(T const *pData, size_t size)
     : list_(pData, size) {}
 
 template<typename T>
@@ -30,7 +30,7 @@ ListSequence<T>::ListSequence(ListSequence<T> const &rList)
 // **** Operators ****
 
 template<typename T>
-ListSequence<T> operator+(ListSequence<T> const &rListA, ListSequence<T> const &rListB){ return rListA.GetList() + rListB; }
+ListSequence<T> operator+(ListSequence<T> const &rListA, ListSequence<T> const &rListB){ return rListA.GetList() + rListB.GetList(); }
 
 
 // ** Operator[] **

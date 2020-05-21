@@ -4,11 +4,10 @@
 
 #pragma once
 
-#include <iostream>
 #include "ArraySequence.hpp"
 
 
-extern size_t const MAX_STRING_SIZE ;
+extern size_t const MAX_STRING_SIZE;
 
 
 class StringV {

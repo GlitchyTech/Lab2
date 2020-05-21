@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <iostream>
 #include "ISequence.hpp"
 #include "List.hpp"
 
@@ -15,7 +14,7 @@ public:
     // **** Constructors ****
 
     ListSequence();
-    ListSequence(T *, size_t);
+    ListSequence(T const *, size_t);
     ListSequence(List<T> const &);
 
 

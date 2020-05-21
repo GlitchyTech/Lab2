@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include "StringVector.hpp"
-
 
 size_t const MAX_STRING_SIZE = 1000;
 
@@ -23,8 +21,8 @@ StringV::StringV(char const *pCString)
     for (size_t i = 0; i < string_.GetSize(); ++i) string_[i] = pCString[i];
 }
 
-StringV::StringV(ArraySequence<char> const &rString)
-    : string_(rString) {}
+StringV::StringV(ArraySequence<char> const &rArray)
+    : string_(rArray) {}
 
 
 // ** Copy Constructor **
