@@ -10,7 +10,7 @@
 
 void InterfaceString(){
     std::cout << "Hello, Dear User! Currently you're using my implementation "
-                 "of C++ string! I hope you'll enjoy! Let's start then!\n\n";
+                 "of C++ string!\nI hope you'll enjoy! Let's start then!\n\n";
 
     std::cout << "Firstly, choose which version you want to use :\n"
                  "1. String as array\n"

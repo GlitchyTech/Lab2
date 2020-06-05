@@ -32,7 +32,21 @@ ArraySequence<T>::ArraySequence(ArraySequence<T> const &rArray)
 
 // **** Destructor ****
 
-// He is set to default
+template<typename T>
+ArraySequence<T>::~ArraySequence() = default;
+
+
+// **** Comparison Operators ****
+
+template<typename T>
+bool operator==(ArraySequence<T> const &rArrA, ArraySequence<T> const &rArrB){
+    return rArrA.GetArray() == rArrB.GetArray();
+}
+
+template<typename T>
+bool operator!=(ArraySequence<T> const &rArrA, ArraySequence<T> const &rArrB){
+    return rArrA.GetArray() != rArrB.GetArray();
+}
 
 
 // **** Operators ****

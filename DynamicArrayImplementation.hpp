@@ -42,6 +42,24 @@ DynamicArray<T>::DynamicArray(DynamicArray<T> const &rDarr)
     }
 
 
+// **** Comparison Operators ****
+
+template<typename T>
+bool operator==(DynamicArray<T> const &rDarrA, DynamicArray<T> const &rDarrB){
+    if (rDarrA.GetSize() != rDarrB.GetSize()) return false;
+
+    size_t n = rDarrA.GetSize();
+    for (size_t i = 0; i < n; ++i) if (rDarrA[i] != rDarrB[i]) return false;
+
+    return true;
+}
+
+template<typename T>
+bool operator!=(DynamicArray<T> const &rDarrA, DynamicArray<T> const &rDarrB){
+    return !(rDarrA == rDarrB);
+}
+
+
 // **** Operators ****
 
 template<typename T>

@@ -24,7 +24,7 @@ public:
 
     // **** Destructor ****
 
-    ~StringV() = default;
+    ~StringV();
 
 
     // **** Getters ****
@@ -45,11 +45,26 @@ public:
     void SetSize(size_t);
 
 
+    // **** Comparison Operators ****
+
+    friend bool operator==(StringV const &, StringV const &);
+
+    friend bool operator!=(StringV const &, StringV const &);
+
+
     // **** Operators ****
 
     StringV operator+(StringV const &);
     char operator[](size_t) const;
     char & operator[](size_t);
+
+
+    // **** Comparison ****
+
+//    friend bool operator==(StringV const &);
+//    bool operator=!(StringV const &);
+//    bool operator
+
 
     // ** Assigment Operator **
 

@@ -38,3 +38,5 @@ extern size_t const MAX_STRING_SIZE;
 void IsExceptionOutOfRange(size_t, size_t);
 void IsExceptionLength(size_t, size_t = 0);
 void IsEndBiggerStart(size_t, size_t);
+
+// **** Input Features ****

@@ -25,7 +25,16 @@ public:
 
     // **** Destructor ****
 
-    ~ArraySequence() = default;
+    ~ArraySequence();
+
+
+    // **** Comparison Operators ****
+
+    template<typename TT>
+    friend bool operator==(ArraySequence<TT> const &, ArraySequence<TT> const &);
+
+    template<typename TT>
+    friend bool operator!=(ArraySequence<TT> const &, ArraySequence<TT> const &);
 
 
     // **** Operators ****

@@ -23,6 +23,16 @@ public:
     DynamicArray(DynamicArray<T> const &);
 
 
+    // **** Comparison Operators ****
+
+
+    template<typename TT>
+    friend bool operator==(DynamicArray<TT> const &, DynamicArray<TT> const &);
+
+    template<typename TT>
+    friend bool operator!=(DynamicArray<TT> const &, DynamicArray<TT> const &);
+
+
     // **** Operators ****
 
     template<typename TT>

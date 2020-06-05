@@ -29,8 +29,7 @@ StringV::StringV(StringV const &rString)
 
 // **** Destructor ****
 
-// Set to default
-
+StringV::~StringV() = default;
 
 // **** Getters ****
 
@@ -56,6 +55,17 @@ size_t StringV::GetSize() const { return GetString().GetSize(); }
 // **** Setters ****
 
 void StringV::SetSize(size_t newSize) { GetString().SetSize(newSize); }
+
+
+// **** Comparison Operators ****
+
+bool operator==(StringV const &rStrA, StringV const &rStrB){
+    return rStrA.GetString() == rStrB.GetString();
+}
+
+bool operator!=(StringV const &rStrA, StringV const &rStrB){
+    return rStrA.GetString() != rStrB.GetString();
+}
 
 
 // **** Operators ****
