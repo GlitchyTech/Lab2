@@ -10,6 +10,8 @@ std::string const NEGATIVE_SIZE = "ERROR : Size can't be negative \n";
 std::string const EMPTY_CONTAINER = "ERROR : Empty container \n";
 std::string const START_BIGGER_THAN_END = "ERROR : Start bigger than end \n";
 
+size_t const MAX_STRING_SIZE = 1000;
+
 
 // **** Error Handling ****
 

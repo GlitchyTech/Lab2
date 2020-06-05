@@ -4,10 +4,6 @@
 
 #pragma once
 
-
-size_t const MAX_STRING_SIZE = 1000;
-
-
 // **** Constructors ****
 
 StringV::StringV()

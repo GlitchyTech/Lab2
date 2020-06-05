@@ -4,4 +4,4 @@
 
 #pragma once
 
-void InterfaceWithString();
+void InterfaceString();

@@ -30,6 +30,8 @@ extern std::string const NEGATIVE_SIZE;
 extern std::string const EMPTY_CONTAINER;
 extern std::string const START_BIGGER_THAN_END;
 
+extern size_t const MAX_STRING_SIZE;
+
 
 // **** Error Handling ****
 
