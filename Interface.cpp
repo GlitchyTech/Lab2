@@ -7,6 +7,7 @@
 #include "Interface.hpp"
 #include "InterfaceStringVector.hpp"
 #include "InterfaceStringList.hpp"
+#include "StringVector.hpp"
 
 void InterfaceString(){
     std::cout << "Hello, Dear User! Currently you're using my implementation "
@@ -16,7 +17,7 @@ void InterfaceString(){
                  "1. String as array\n"
                  "2. String as list\n";
 
-    std::string option = "";
+    StringV option = "";
     std::cin >> option;
 
     while (!(option == "1" || option == "2")) {

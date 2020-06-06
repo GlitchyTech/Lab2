@@ -9,9 +9,6 @@
 #include "Utils.hpp"
 
 
-size_t const DEFAULT_CAPACITY = 300;
-
-
 // **** Constructors ****
 
 template<typename T>

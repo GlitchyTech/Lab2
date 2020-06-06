@@ -6,7 +6,7 @@
 
 #include <iostream>
 
-extern size_t const DEFAULT_CAPACITY;
+static size_t const DEFAULT_CAPACITY = 300;
 
 template<typename T>
 class DynamicArray {
