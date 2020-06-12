@@ -84,7 +84,6 @@ StringV & StringV::operator=(StringV const &rString) {
 }
 
 std::istream & operator>>(std::istream &rIs, StringV &rString) {
-    std::cout << "Enter your string which size <= " << MAX_STRING_SIZE << " : ";
     char *pCString = new char[MAX_STRING_SIZE];
     rIs >> pCString;
     rString = StringV(pCString);

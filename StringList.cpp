@@ -57,6 +57,17 @@ char StringL::operator[](size_t i) const { return GetString()[i]; }
 
 char & StringL::operator[](size_t i) { return GetString()[i]; }
 
+
+// **** Comparison ****
+
+bool operator==(StringL const &rStrA, StringL const &rStrB){
+    return rStrA.GetString() == rStrB.GetString();
+}
+
+bool operator!=(StringL const &rStrA, StringL const &rStrB){
+    return rStrA.GetString() != rStrB.GetString();
+}
+
 // ** Assignment Operator **
 
 StringL & StringL::operator=(StringL const &rString){
@@ -65,8 +76,7 @@ StringL & StringL::operator=(StringL const &rString){
 }
 
 std::istream & operator>>(std::istream &rIs, StringL &rString){
-    std::cout << "Enter your string which size <= " << MAX_STRING_SIZE << " : ";
-    char *pCString = new char[MAX_STRING_SIZE];
+    char *pCString = new char[MAX_STRING_SIZE + 100];
     rIs >> pCString;
     rString = StringL(pCString);
     return rIs;

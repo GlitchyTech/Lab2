@@ -25,22 +25,24 @@ List<T>::List(T const *pData, size_t size)
             (*ppCur_node)->data_ = pData[i];
             ppCur_node = &((*ppCur_node)->next_);
         }
+        if (size == 0) head_ = nullptr;
     }
 
 // ** Copy Constructor **
 
 template<typename T>
 List<T>::List(List<T> const &rList)
-    : size_(rList.size_){
-    Node **ppCur_node = &head_;
-    Node * const *ppCur_node_copy = &rList.head_;
-    for (size_t i = 0; i != size_; ++i){
-        *ppCur_node = new Node;
-        (*ppCur_node)->data_ = (*ppCur_node_copy)->data_;
-        ppCur_node = &((*ppCur_node)->next_);
-        ppCur_node_copy = &((*ppCur_node_copy)->next_);
+    : size_(rList.size_)
+    {
+        Node **ppCur_node = &head_;
+        Node * const *ppCur_node_copy = &rList.head_;
+        for (size_t i = 0; i != size_; ++i){
+            *ppCur_node = new Node;
+            (*ppCur_node)->data_ = (*ppCur_node_copy)->data_;
+            ppCur_node = &((*ppCur_node)->next_);
+            ppCur_node_copy = &((*ppCur_node_copy)->next_);
+        }
     }
-}
 
 
 // **** Operators ****
@@ -108,11 +110,30 @@ T List<T>::operator[](size_t i) const { return GetElementData(i); }
 template<typename T>
 T & List<T>::operator[](size_t i) { return GetElementData(i); }
 
+
+// **** Comparison ****
+
+template<typename T>
+bool operator==(List<T> const &rListA, List<T> const &rListB){
+    if (rListA.GetSize() != rListB.GetSize()) return false;
+
+    for (size_t i = 0; i < rListA.GetSize(); ++i){
+        if (rListA[i] != rListB[i]) return false;
+    }
+
+    return true;
+}
+
+template<typename T>
+bool operator!=(List<T> const &rListA, List<T> const &rListB){
+    return !(rListA == rListB);
+}
+
 // **** Destructor ****
 
 template<typename T>
 List<T>::~List(){
-    delete head_;
+    if (head_ != nullptr) delete head_;
     head_ = nullptr;
 }
 
@@ -124,7 +145,7 @@ size_t List<T>::GetSize() const { return size_; }
 
 template<typename T>
 T List<T>::GetElementData(size_t i) const {
-    IsErrorOutOfRange(i, GetSize());
+    IsExceptionOutOfRange(i, GetSize());
 
     Node *pCur_node = GetHead();
     for (size_t iElem = 0; iElem < i; ++iElem){

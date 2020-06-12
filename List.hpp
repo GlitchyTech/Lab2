@@ -114,7 +114,7 @@ private:
         in Node destructor which will cause error
 
         ~Node(){
-            if (GetNext() != nullptr) delete next_;
+            //if (GetNext() != nullptr) delete next_;
             next_ = nullptr;
         }
 

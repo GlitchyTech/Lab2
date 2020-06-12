@@ -224,7 +224,6 @@ void DynamicArray<T>::Append(T data) { InsertAt(GetSize(), data); }
 template<typename T>
 void DynamicArray<T>::EraseAt(size_t i) {
     IsExceptionOutOfRange(i, GetSize());
-    INFO(i);
 
     if (GetSize() == 0) return;
 

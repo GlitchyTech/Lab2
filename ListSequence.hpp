@@ -42,7 +42,6 @@ public:
     template<typename TT>
     friend std::ostream & operator<<(std::ostream &, ListSequence<TT> const &);
 
-
     // **** Getters ****
 
     List<T> GetList() const;

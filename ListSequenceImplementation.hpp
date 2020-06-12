@@ -56,6 +56,18 @@ template<typename T>
 std::ostream & operator<<(std::ostream &rOs, ListSequence<T> const &rList) { return rOs << rList.GetList(); }
 
 
+// **** Comparison ****
+
+template<typename T>
+bool operator==(ListSequence<T> const &rListA, ListSequence<T> const &rListB){
+    return rListA.GetList() == rListB.GetList();
+}
+
+template<typename T>
+bool operator!=(ListSequence<T> const &rListA, ListSequence<T> const &rListB){
+    return !(rListA == rListB);
+}
+
 // **** Getters ****
 
 template<typename T>

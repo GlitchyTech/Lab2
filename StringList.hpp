@@ -49,6 +49,11 @@ public:
     char operator[](size_t) const;
     char & operator[](size_t);
 
+    // **** Boolean Operators ****
+
+    friend bool operator==(StringL const &, StringL const &);
+    friend bool operator!=(StringL const &, StringL const &);
+
 
     // ** Assignment Operator **
 
@@ -73,6 +78,3 @@ private:
     ListSequence<char> string_;
 
 };
-
-
-//#include "StringList.cpp"

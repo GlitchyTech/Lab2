@@ -59,13 +59,6 @@ public:
     char & operator[](size_t);
 
 
-    // **** Comparison ****
-
-//    friend bool operator==(StringV const &);
-//    bool operator=!(StringV const &);
-//    bool operator
-
-
     // ** Assigment Operator **
 
     StringV & operator=(StringV const &);
@@ -89,6 +82,3 @@ private:
     ArraySequence<char> string_;
 
 };
-
-
-//#include "StringVector.cpp"
